@@ -1,5 +1,10 @@
-import { Client, GatewayIntentBits } from 'discord.js';
-
+import { Client, GatewayIntentBits, Collection } from 'discord.js';
+import fs from 'fs';
+import dotenv from 'dotenv'
+import { ready } from './events/ready';
+import { runCommand } from './events/runCommands';
+import { AutoMod } from './services/AutoMod';
+dotenv.config();
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -7,17 +12,30 @@ const client = new Client({
     GatewayIntentBits.MessageContent,
   ],
 });
+const config = {
+  token: process.env.TOKEN,
+  prefix: process.env.PREFIX,
+};
+client.config = config;
 
-const TOKEN = '';
 
-client.on('messageCreate', (message) => {
-  // Verifica si el mensaje contiene un enlace de discord.gg o discord.com/invite
-  if (message.content.includes('discord.gg') || message.content.includes('discord.com/invite')) {
-    // Borra el mensaje
-    message.delete().catch((error) => {
-      console.error('Error al intentar borrar el mensaje:', error);
-    });
-  }
-});
-client.login(TOKEN);
+client.commands = new Collection();
+const commandFolders = fs.readdirSync('./src/commands/');
+for (const folder of commandFolders) {
+  let props = require(`./commands/${folder}/index.js`);
+  console.log(`[Loading command]: ${folder}`);
+  client.commands.set(folder, props);
+}
+
+client.on('ready', async () => {
+  ready(client);
+
+})
+client.on('messageCreate', async (message) => {
+  runCommand(client, message)
+  AutoMod(client, message)
+})
+
+
+client.login(client.config.token);
 
