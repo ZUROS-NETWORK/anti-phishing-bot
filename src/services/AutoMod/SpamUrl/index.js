@@ -1,6 +1,8 @@
+import { Actions } from '../../Actions/index.js';
+
 const userSpamData = new Map();
 
-export const SpamUrl = async (client, message) => {
+export const Spam = async (client, message, options) => {
     const regex = /(https?:\/\/[^\s]+)/g;
     const urls = message.content.match(regex);
 
@@ -21,35 +23,21 @@ export const SpamUrl = async (client, message) => {
         const link = urls ? urls[0] : null;
 
         if (!userSpamData.has(authorId)) {
-            userSpamData.set(authorId, { link, count: 1, timestamp: now, messages: [message.id] });
+            userSpamData.set(authorId, { link, count: 1, timestamp: now });
         } else {
             const userData = userSpamData.get(authorId);
 
             if (userData.link === link && now - userData.timestamp < 4000) {
                 userData.count++;
 
-                if (userData.count > 3) {
-                    for (const messageId of userData.messages) {
-                        try {
-                            const deletedMessage = await message.channel.messages.fetch(messageId);
-                            if (deletedMessage) {
-                                await deletedMessage.delete();
-                            }
-                        } catch (error) {
-                            console.error(`Error al eliminar mensaje con ID ${messageId}: ${error.message}`);
-                        }
-                    }
-                    // Clear user data after deleting messages
+                if (userData.count >= 3) {
                     userSpamData.delete(authorId);
-                    const member = message.guild.members.cache.get(message.author.id);
-                    await member.roles.remove(Array.from(member.roles.cache.keys()))
-                        .catch(error => console.error('Error deleting roles:', error));
-                } else {
-                    // Add the message ID to the user's message array
-                    userData.messages.push(message.id);
+                    const userId = message.author.id
+                    await Actions({ client, options, userId })
+
                 }
             } else {
-                userSpamData.set(authorId, { link, count: 1, timestamp: now, messages: [message.id] });
+                userSpamData.set(authorId, { link, count: 1, timestamp: now });
             }
         }
     }
