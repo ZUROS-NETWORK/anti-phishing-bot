@@ -1,6 +1,6 @@
 export const runCommand = async (client, message) => {
     if (message.author.bot) return;
-
+    if (!message.member.roles.cache.has(client.config.adminRoleId)) return;
     if (message.content.indexOf(client.config.prefix) !== 0) return;
 
     const args = message.content
