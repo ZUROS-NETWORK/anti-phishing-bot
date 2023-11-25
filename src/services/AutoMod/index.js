@@ -12,7 +12,7 @@ export const AutoMod = async (client, message) => {
             console.error('Error in the Honeypot function:', error);
         });
     }
-    if (client.config.honeypotChannelId !== message.channel.id) {
+    if (client.config.honeypotChannelId !== message.channel.id && !message.author.bot) {
         if (config.external_server_invitation_link.enabled) {
             await DiscordUrl(client, message, config.external_server_invitation_link).catch((error) => {
                 console.error('Error in the DiscordUrl function:', error);
