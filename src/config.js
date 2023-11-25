@@ -56,6 +56,14 @@ export const configFile = {
         // Configuration for fast link spam
         fast_link_spam: {
             enabled: true,
+            detection: {
+                // Minimum seconds between each link
+                minSecondsBetweenLinks: 4,
+                // Maximum links in established second nodes
+                maxLinks: 3,
+                // clear user cache must be greater than minSecondsBetweenLinks
+                cleanupInterval: 5
+            },
             // Option to delete all messages from the user
             deleteAllMessages: {
                 enabled: true,
