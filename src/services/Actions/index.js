@@ -7,7 +7,7 @@ export const Actions = async ({ client, options, userId }) => {
     if (options.deleteAllMessages.enabled) {
         await deleteAllMessages(client, userId, options.deleteAllMessages.maxMsg)
     }
-    if (options.deleteAllMessages.enabled) {
+    if (options.removeRoles.enabled) {
         await removeRoles(client, userId)
     }
     if (options.Blacklister.enabled) {
