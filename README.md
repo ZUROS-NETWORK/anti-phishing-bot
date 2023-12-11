@@ -21,7 +21,7 @@ It includes a honeypot channel system to attract potential malicious users, enab
 1. Clone the repository: `git clone https://github.com/ZUROS-NETWORK/anti-phishing-bot.git`
 2. Install dependencies: `npm install`
 3. Configure the settings file (`config.js`) with your detection settings.
-4. Edit `example.env` to `.env` file and configure it with your bot token, as well as the necessary channel and role IDs
+4. Rename `example.env` to `.env` file and configure it with your bot token, as well as the necessary channel and role IDs
 6. Build the bot for production: npm run build (Run the bot in development mode: npm run dev)
 7. Start the bot in production mode: npm start 
 
