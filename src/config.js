@@ -28,6 +28,11 @@ export const configFile = {
                 enabled: true,
                 msg: 'Fue aislado por enviar un enlace de invitación sospechosa.',
             },
+            // Option to send a Private message to the user
+            sendPrivateMessages: {
+                enabled: true,
+                msg: "Fuiste aislado por enviar un enlace de invitación sospechosa. \nSi cree que es un error o su cuenta ha sido vulnerada abra un ticket.",
+            },
         },
 
         // Configuration for phishing and scam links
@@ -50,6 +55,11 @@ export const configFile = {
             sendMessages: {
                 enabled: true,
                 msg: 'Fue aislado por enviar enlaces fraudulentos.',
+            },
+            // Option to send a Private message to the user
+            sendPrivateMessages: {
+                enabled: true,
+                msg: "Fuiste aislado por enviar enlaces fraudulentos. \nSi cree que es un error o su cuenta ha sido vulnerada abra un ticket.",
             },
         },
 
@@ -82,6 +92,11 @@ export const configFile = {
                 enabled: true,
                 msg: 'Fue aislado por enviar demasiados enlaces en poco tiempo.',
             },
+            // Option to send a Private message to the user
+            sendPrivateMessages: {
+                enabled: true,
+                msg: "Fuiste aislado por enviar demasiados enlaces en poco tiempo. \nSi cree que es un error o su cuenta ha sido vulnerada abra un ticket.",
+            },
         },
 
         // Configuration for the honeypot system
@@ -89,8 +104,8 @@ export const configFile = {
             enabled: true,
             // Option to delete all messages from the user
             deleteAllMessages: {
-                enabled: false,
-                maxMsg: 20, // Maximum number of messages to delete
+                enabled: true,
+                maxMsg: 5, // Maximum number of messages to delete
             },
             // Option to remove roles from the user
             removeRoles: {
@@ -104,6 +119,10 @@ export const configFile = {
             sendMessages: {
                 enabled: false,
                 msg: '',
+            },
+            sendPrivateMessages: {
+                enabled: true,
+                msg: "Fuiste aislado por enviar mensajes en el canal honypot (trampa para cuentas hackeadas o bots). \nSi cree que es un error o su cuenta ha sido vulnerada abra un ticket.",
             },
         }
     }
