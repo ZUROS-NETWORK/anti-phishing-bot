@@ -2,7 +2,7 @@ import fs from 'fs';
 import { configFile } from '../../../config.js';
 import { Actions } from '../../Actions/index.js';
 export const DiscordUrl = async (client, message, options) => {
-    const regex = /(https?:\/\/[^\s]+)/g;
+    const regex = /(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?/g;
     const urls = message.content.match(regex);
     const userId = message.author.id
 
